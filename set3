@@ -49,3 +49,67 @@ public class Main {
         c.printArea();
     }
 }
+
+
+
+
+
+import java.util.Scanner;
+
+interface CurrencyConverter {
+    double dollarToINR(double amount);
+    double euroToINR(double amount);
+    double yenToINR(double amount);
+}
+
+class Converter implements CurrencyConverter {
+
+    public double dollarToINR(double amount) {
+        return amount * 83;
+    }
+
+    public double euroToINR(double amount) {
+        return amount * 90;
+    }
+
+    public double yenToINR(double amount) {
+        return amount * 0.56;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        Converter c = new Converter();
+
+        System.out.println("1. Dollar to INR");
+        System.out.println("2. Euro to INR");
+        System.out.println("3. Yen to INR");
+
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+
+        System.out.print("Enter amount: ");
+        double amount = sc.nextDouble();
+
+        switch (choice) {
+            case 1:
+                System.out.println("INR: " + c.dollarToINR(amount));
+                break;
+
+            case 2:
+                System.out.println("INR: " + c.euroToINR(amount));
+                break;
+
+            case 3:
+                System.out.println("INR: " + c.yenToINR(amount));
+                break;
+
+            default:
+                System.out.println("Invalid Choice");
+        }
+
+        sc.close();
+    }
+}
