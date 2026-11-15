@@ -1,1 +1,125 @@
 
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Add extends JFrame implements ActionListener {
+
+    JLabel l1, l2, l3;
+    JTextField num1, num2, res;
+    JButton div;
+
+    public Add() {
+
+        setTitle("Division Program");
+        setSize(350, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+        setResizable(false);
+
+        l1 = new JLabel("Number 1");
+        l2 = new JLabel("Number 2");
+        l3 = new JLabel("Result");
+
+        num1 = new JTextField(10);
+        num2 = new JTextField(10);
+        res = new JTextField(15);
+
+        res.setEditable(false);
+
+        div = new JButton("Div");
+        div.addActionListener(this);
+
+        add(l1);add(num1);
+        add(l2);add(num2);
+        add(l3);add(res);
+        add(div);
+
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+
+        try {
+            int n1 = Integer.parseInt(num1.getText());
+            int n2 = Integer.parseInt(num2.getText());
+
+            int result = n1 / n2;
+
+            res.setText(String.valueOf(result));
+        }
+        catch (ArithmeticException e) {
+            res.setText("Arithmetic Exception");
+        }
+        catch (NumberFormatException e) {
+            res.setText("Number Format Exception");
+        }
+    }
+
+    public static void main(String[] args) {
+        new Add();
+    }
+}
+
+
+
+
+
+class InsufficientFundsException extends Exception {
+
+    public InsufficientFundsException() {
+        super("Insufficient funds in the account.");
+    }
+
+    public InsufficientFundsException(String message) {
+        super(message);
+    }
+}
+
+// Bank Account Class
+class BankAccount {
+
+    private String accountHolder;
+    private double balance;
+
+    public BankAccount(String accountHolder, double initialBalance) {
+
+        this.accountHolder = accountHolder;
+        this.balance = initialBalance;
+    }
+
+    public void withdraw(double amount)
+            throws InsufficientFundsException {
+
+        if (amount > balance) {
+            throw new InsufficientFundsException();
+        }
+
+        balance -= amount;
+
+        System.out.println("Withdrawal Successful");
+        System.out.println("Remaining Balance: " + balance);
+    }
+}
+
+// Main Class
+public class BankingApplication {
+
+    public static void main(String[] args) {
+
+        BankAccount account =
+            new BankAccount("John", 1000);
+
+        try {
+            account.withdraw(500);
+            account.withdraw(800);
+        }
+        catch (InsufficientFundsException e) {
+
+            System.out.println("Caught an Exception:");
+            System.out.println(e.getMessage());
+        }
+    }
+}
