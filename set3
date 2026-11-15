@@ -54,62 +54,51 @@ public class Main {
 
 
 
-import java.util.Scanner;
+interface CurrencyConverter
+{
+    double USD_TO_INR = 95.5;
+    double EURO_TO_INR = 112.8;
+    double YEN_TO_INR = 0.55;
 
-interface CurrencyConverter {
-    double dollarToINR(double amount);
-    double euroToINR(double amount);
-    double yenToINR(double amount);
+    double dollarToInr(double dollar);
+    double euroToInr(double euro);
+    double yenToInr(double yen);
 }
 
-class Converter implements CurrencyConverter {
-
-    public double dollarToINR(double amount) {
-        return amount * 83;
+class SimpleConverter implements CurrencyConverter
+{
+   @Override
+    public double dollarToInr(double dollar) {
+        return dollar * USD_TO_INR;
+        
     }
 
-    public double euroToINR(double amount) {
-        return amount * 90;
+    @Override
+    public double euroToInr(double euro) {
+       return euro * EURO_TO_INR;
     }
 
-    public double yenToINR(double amount) {
-        return amount * 0.56;
-    }
-}
-
-public class Main {
-    public static void main(String[] args) {
-
-        Scanner sc = new Scanner(System.in);
-        Converter c = new Converter();
-
-        System.out.println("1. Dollar to INR");
-        System.out.println("2. Euro to INR");
-        System.out.println("3. Yen to INR");
-
-        System.out.print("Enter choice: ");
-        int choice = sc.nextInt();
-
-        System.out.print("Enter amount: ");
-        double amount = sc.nextDouble();
-
-        switch (choice) {
-            case 1:
-                System.out.println("INR: " + c.dollarToINR(amount));
-                break;
-
-            case 2:
-                System.out.println("INR: " + c.euroToINR(amount));
-                break;
-
-            case 3:
-                System.out.println("INR: " + c.yenToINR(amount));
-                break;
-
-            default:
-                System.out.println("Invalid Choice");
-        }
-
-        sc.close();
+    @Override
+    public double yenToInr(double yen) {
+        return yen * YEN_TO_INR;
     }
 }
+
+
+
+public class Main
+{
+    public static void main(String[] args) 
+    {
+        SimpleConverter s = new SimpleConverter();
+        double dollar = 45;
+        double euro = 100.56;
+        double yen = 6000;
+
+        System.out.printf("%.2f dollars in the Inr is %.2f\n",dollar,s.dollarToInr(dollar));
+        System.out.printf("%.2f euros in the Inr is %.2f\n",euro,s.euroToInr(euro));
+        System.out.printf("%.2f yen in the Inr is %.2f\n",yen,s.yenToInr(yen));
+        
+    }
+}
+   
