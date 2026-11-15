@@ -1,0 +1,173 @@
+
+import java.util.Scanner;
+
+class Node {
+    int data;
+    Node prev, next;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+public class DoublyLinkedListDemo {
+
+    Node head = null;
+
+    void insert(int data) {
+        Node newNode = new Node(data);
+
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+
+        Node temp = head;
+
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        temp.next = newNode;
+        newNode.prev = temp;
+    }
+
+    void delete(int key) {
+        Node temp = head;
+
+        while (temp != null && temp.data != key) {
+            temp = temp.next;
+        }
+
+        if (temp == null) {
+            System.out.println("Element not found");
+            return;
+        }
+
+        if (temp == head) {
+            head = temp.next;
+        }
+
+        if (temp.next != null) {
+            temp.next.prev = temp.prev;
+        }
+
+        if (temp.prev != null) {
+            temp.prev.next = temp.next;
+        }
+
+        System.out.println("Element deleted successfully");
+    }
+
+    void display() {
+        Node temp = head;
+
+        System.out.println("Doubly Linked List:");
+
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        DoublyLinkedListDemo list = new DoublyLinkedListDemo();
+
+        System.out.print("Enter number of elements: ");
+        int n = sc.nextInt();
+
+        System.out.println("Enter elements:");
+
+        for (int i = 0; i < n; i++) {
+            list.insert(sc.nextInt());
+        }
+
+        list.display();
+
+        System.out.print("Enter element to delete: ");
+        int key = sc.nextInt();
+
+        list.delete(key);
+
+        list.display();
+
+        sc.close();
+    }
+}
+
+
+
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class MouseEventsDemo extends JFrame {
+
+    JLabel l;
+
+    MouseEventsDemo() {
+
+        setTitle("Mouse Events");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        l = new JLabel("Perform Mouse Events", JLabel.CENTER);
+        add(l, BorderLayout.CENTER);
+
+        MouseAdapter ma = new MouseAdapter() {
+
+            public void mouseClicked(MouseEvent e) {
+                l.setText("Mouse Clicked");
+            }
+
+            public void mousePressed(MouseEvent e) {
+                l.setText("Mouse Pressed");
+            }
+
+            public void mouseReleased(MouseEvent e) {
+                l.setText("Mouse Released");
+            }
+
+            public void mouseEntered(MouseEvent e) {
+                l.setText("Mouse Entered");
+            }
+
+            public void mouseExited(MouseEvent e) {
+                l.setText("Mouse Exited");
+            }
+
+            public void mouseMoved(MouseEvent e) {
+                l.setText("Mouse Moved");
+            }
+
+            public void mouseDragged(MouseEvent e) {
+                l.setText("Mouse Dragged");
+            }
+
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                l.setText("Mouse Wheel Moved");
+            }
+        };
+
+        addMouseListener(ma);
+        addMouseMotionListener(ma);
+        addMouseWheelListener(ma);
+
+        l.addMouseListener(ma);
+        l.addMouseMotionListener(ma);
+        l.addMouseWheelListener(ma);
+
+        setVisible(true);
+    }
+
+    public static void main(String[] args) {
+        new MouseEventsDemo();
+    }
+}
