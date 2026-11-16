@@ -1,0 +1,62 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class TrafficLight extends JFrame implements ActionListener {
+    private JLabel messageLabel;
+    private JRadioButton redButton, yellowButton, greenButton;
+
+    public TrafficLight() {
+        setTitle("Traffic Light Simulator");
+        setSize(400, 200);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Message label (empty initially), shown above the buttons
+        messageLabel = new JLabel("", SwingConstants.CENTER);
+        messageLabel.setFont(new Font("Arial", Font.BOLD, 32));
+        messageLabel.setPreferredSize(new Dimension(400, 80));
+        add(messageLabel, BorderLayout.NORTH);
+
+        // Radio buttons
+        redButton = new JRadioButton("Red");
+        yellowButton = new JRadioButton("Yellow");
+        greenButton = new JRadioButton("Green");
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(redButton);
+        group.add(yellowButton);
+        group.add(greenButton);
+
+        redButton.addActionListener(this);
+        yellowButton.addActionListener(this);
+        greenButton.addActionListener(this);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        buttonPanel.add(redButton);
+        buttonPanel.add(yellowButton);
+        buttonPanel.add(greenButton);
+        add(buttonPanel, BorderLayout.CENTER);
+
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == redButton) {
+            messageLabel.setText("Stop");
+            messageLabel.setForeground(Color.RED);
+        } else if (e.getSource() == yellowButton) {
+            messageLabel.setText("Ready");
+            messageLabel.setForeground(Color.ORANGE);
+        } else if (e.getSource() == greenButton) {
+            messageLabel.setText("Go");
+            messageLabel.setForeground(Color.GREEN);
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(TrafficLight::new);
+    }
+}
